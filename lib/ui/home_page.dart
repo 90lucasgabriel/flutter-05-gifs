@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:share/share.dart';
 
 import 'package:gifs/ui/gif_page.dart';
 
@@ -55,19 +56,24 @@ class _HomePageState extends State<HomePage> {
       itemBuilder: (context, index) {
         if (_keyword.isEmpty || index < snapshot.data['data'].length - 1) {
           return GestureDetector(
-              child: Image.network(
-                snapshot.data['data'][index]['images']['fixed_height']['url'],
-                height: 300,
-                fit: BoxFit.cover,
-              ),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => GifPage(snapshot.data['data'][index]),
-                  ),
-                );
-              });
+            child: Image.network(
+              snapshot.data['data'][index]['images']['fixed_height']['url'],
+              height: 300,
+              fit: BoxFit.cover,
+            ),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => GifPage(snapshot.data['data'][index]),
+                ),
+              );
+            },
+            onLongPress: () {
+              Share.share(
+                  snapshot.data['data'][index]['images']['downsized']['url']);
+            },
+          );
         }
 
         return GestureDetector(
