@@ -5,6 +5,9 @@ void main() {
   runApp(MaterialApp(
     home: HomePage(),
     theme: ThemeData(
+        iconTheme: IconThemeData(
+          color: Colors.white,
+        ),
         hintColor: Colors.white,
         primaryColor: Colors.white,
         inputDecorationTheme: InputDecorationTheme(
