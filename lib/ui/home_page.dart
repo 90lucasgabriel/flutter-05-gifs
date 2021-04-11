@@ -10,7 +10,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   String _baseUrl = 'https://api.giphy.com/v1/gifs';
   String _key = 'xWcllBt57Hq8lJrAbw5fMafEn5RRNvj3';
-  int _limit = 20;
+  int _limit = 28;
 
   String _keyword;
   int _offset;
@@ -101,6 +101,22 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _createGridLayout(BuildContext context, AsyncSnapshot snapshot) {
-    return Container();
+    return GridView.builder(
+      itemCount: snapshot.data['data'].length,
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 3,
+        mainAxisSpacing: 3,
+        crossAxisSpacing: 3,
+      ),
+      itemBuilder: (context, index) {
+        return GestureDetector(
+          child: Image.network(
+            snapshot.data['data'][index]['images']['fixed_height']['url'],
+            height: 300,
+            fit: BoxFit.cover,
+          ),
+        );
+      },
+    );
   }
 }
