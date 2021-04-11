@@ -1,7 +1,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="br.com.lucasgabriel.gifs.gifs">
+   <uses-permission android:name="android.permission.INTERNET"/>
+
    <application
-        android:label="gifs"
+        android:label="Gifs"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
