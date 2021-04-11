@@ -44,6 +44,33 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      backgroundColor: Colors.black,
+      appBar: AppBar(
+        backgroundColor: Colors.black,
+        centerTitle: true,
+        title: Container(
+          padding: EdgeInsets.all(64),
+          child: Image.network(
+              'https://developers.giphy.com/static/img/dev-logo-lg.7404c00322a8.gif'),
+        ),
+      ),
+      body: Column(
+        children: <Widget>[
+          Container(
+            padding: EdgeInsets.all(16),
+            child: TextField(
+              decoration: InputDecoration(
+                labelText: 'Search',
+                labelStyle: TextStyle(color: Colors.white),
+                border: OutlineInputBorder(),
+                contentPadding: EdgeInsets.fromLTRB(16, 8, 16, 8),
+              ),
+              style: TextStyle(color: Colors.white, fontSize: 16),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
