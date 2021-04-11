@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:share/share.dart';
+import 'package:flutter/rendering.dart';
 import 'package:transparent_image/transparent_image.dart';
+
+import 'package:gifs/utils/services/share.dart';
 
 class GifPage extends StatelessWidget {
   final Map _data;
@@ -21,9 +23,7 @@ class GifPage extends StatelessWidget {
           actions: <Widget>[
             IconButton(
               icon: Icon(Icons.share),
-              onPressed: () {
-                Share.share(_data['images']['downsized']['url']);
-              },
+              onPressed: () async => share(_data['images']['downsized']['url']),
             )
           ]),
       backgroundColor: Colors.black,

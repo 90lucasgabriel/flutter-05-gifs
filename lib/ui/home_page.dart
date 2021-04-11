@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'dart:convert';
-import 'package:share/share.dart';
 import 'package:transparent_image/transparent_image.dart';
+import 'dart:convert';
 
+import 'package:gifs/utils/services/share.dart';
 import 'package:gifs/ui/gif_page.dart';
 
 class HomePage extends StatefulWidget {
@@ -88,11 +88,9 @@ class _HomePageState extends State<HomePage> {
                     ),
                   );
                 },
-                onLongPress: () {
-                  Share.share(snapshot.data['data'][index]['images']
-                      ['downsized']['url']);
-                },
-              )
+                onLongPress: () async => (share(snapshot.data['data'][index]
+                    ['images']['downsized']['url'])),
+              ),
             ],
           );
         }
