@@ -10,18 +10,18 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   String _baseUrl = 'https://api.giphy.com/v1/gifs';
   String _key = 'xWcllBt57Hq8lJrAbw5fMafEn5RRNvj3';
-  int _limit = 28;
+  int _limit = 27;
 
-  String _keyword;
-  int _offset;
+  String _keyword = '';
+  int _offset = 0;
 
   Future<http.Response> _request() async {
     Uri requestTrending =
-        Uri.parse("$_baseUrl/trending?api_key=$_key&limit=$_limit&rating=g");
+        Uri.parse('$_baseUrl/trending?api_key=$_key&limit=$_limit&rating=g');
     Uri requestSearch = Uri.parse(
-        "$_baseUrl/search?api_key=$_key&q=$_keyword&limit=$_limit&offset=$_offset&rating=g&lang=en");
+        '$_baseUrl/search?api_key=$_key&q=$_keyword&limit=$_limit&offset=$_offset&rating=g&lang=en');
 
-    if (_keyword != null) {
+    if (_keyword.isEmpty) {
       return http.get(requestTrending);
     }
 
@@ -34,12 +34,56 @@ class _HomePageState extends State<HomePage> {
     return json.decode(response.body);
   }
 
-  @override
-  void initState() {
-    super.initState();
-    _getGifList().then((map) {
-      print(map);
-    });
+  int _getGridCount(List data) {
+    if (_keyword.isEmpty) {
+      return data.length;
+    }
+
+    return data.length;
+  }
+
+  Widget _createGridLayout(BuildContext context, AsyncSnapshot snapshot) {
+    return GridView.builder(
+      itemCount: _getGridCount(snapshot.data['data']),
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 3,
+        mainAxisSpacing: 3,
+        crossAxisSpacing: 3,
+      ),
+      itemBuilder: (context, index) {
+        if (_keyword.isEmpty || index < snapshot.data['data'].length - 1) {
+          return GestureDetector(
+            child: Image.network(
+              snapshot.data['data'][index]['images']['fixed_height']['url'],
+              height: 300,
+              fit: BoxFit.cover,
+            ),
+          );
+        }
+
+        return GestureDetector(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                Icons.refresh,
+                color: Colors.white,
+                size: 25,
+              ),
+              Text(
+                'Load More',
+                style: TextStyle(color: Colors.white),
+              ),
+            ],
+          ),
+          onTap: () {
+            setState(() {
+              _offset += _limit;
+            });
+          },
+        );
+      },
+    );
   }
 
   @override
@@ -67,6 +111,12 @@ class _HomePageState extends State<HomePage> {
                 contentPadding: EdgeInsets.fromLTRB(16, 8, 16, 8),
               ),
               style: TextStyle(color: Colors.white, fontSize: 16),
+              onSubmitted: (value) {
+                setState(() {
+                  _keyword = value;
+                  _offset = 0;
+                });
+              },
             ),
           ),
           Expanded(
@@ -97,26 +147,6 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
-    );
-  }
-
-  Widget _createGridLayout(BuildContext context, AsyncSnapshot snapshot) {
-    return GridView.builder(
-      itemCount: snapshot.data['data'].length,
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 3,
-        mainAxisSpacing: 3,
-        crossAxisSpacing: 3,
-      ),
-      itemBuilder: (context, index) {
-        return GestureDetector(
-          child: Image.network(
-            snapshot.data['data'][index]['images']['fixed_height']['url'],
-            height: 300,
-            fit: BoxFit.cover,
-          ),
-        );
-      },
     );
   }
 }
