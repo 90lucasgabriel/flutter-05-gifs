@@ -20,8 +20,8 @@ class _HomePageState extends State<HomePage> {
   int _offset = 0;
 
   Future<http.Response> _request() async {
-    Uri requestTrending =
-        Uri.parse('$_baseUrl/trending?api_key=$_key&limit=60&rating=g');
+    Uri requestTrending = Uri.parse(
+        '$_baseUrl/trending?api_key=$_key&limit=${_limit * 2}&rating=g');
     Uri requestSearch = Uri.parse(
         '$_baseUrl/search?api_key=$_key&q=${_keywordController.text}&limit=$_limit&offset=$_offset&rating=g&lang=en');
 
