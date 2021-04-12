@@ -20,7 +20,7 @@ See trending gifs or search for your favorites from [Giphy API](https://develope
   
 </div>
 
-## 2. Download APK
+## 2. Download
 - [Gifs APK - Google Drive](https://drive.google.com/file/d/11DCZhUzwT5VHlJTGvrMeukQYQODcc5Sc/view?usp=sharing)
 
 ## 3. Documentation Step-by-Step
