@@ -39,6 +39,8 @@ See trending gifs or search for your favorites from [Giphy API](https://develope
 - Navigate to gif details route;
 - Share gif;
 - Long press to share;
+- Progress indicator;
+- Fade in images;
 - Handle back button to clear search;
 
 ## 6. Installing and Running
